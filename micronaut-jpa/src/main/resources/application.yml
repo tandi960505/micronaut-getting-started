@@ -1,0 +1,36 @@
+micronaut:
+    application:
+        name: db
+    server:
+        port: 9999
+# swagger
+    router:
+        static-resources:
+            swagger:
+                #paths: classpath:META-INF/swagger
+                mapping: /swagger/**
+
+# 数据源
+datasources:
+    default:
+        name: 'mydb'
+        url: jdbc:mysql://192.168.4.163:3306/micronaut?useUnicode=true&characterEncoding=utf8
+        username: root
+        password: My@123456
+        driverClassName: com.mysql.cj.jdbc.Driver
+#        defaultReadOnly: true
+        minIdle: 1
+        maxIdle: 4
+        maxWaitMillis: 5000
+
+# hibernate-jpa
+jpa:
+    default:
+        packages-to-scan:
+            - 'com.td.domain'
+        properties:
+            hibernate:
+                hbm2ddl:
+                    auto: create
+                show_sql: true
+                format_sql: true

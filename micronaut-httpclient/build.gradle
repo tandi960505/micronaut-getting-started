@@ -1,0 +1,74 @@
+plugins {
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id "com.github.johnrengelman.shadow" version "4.0.2"
+    id "net.ltgt.apt-eclipse" version "0.18"
+    id "net.ltgt.apt-idea" version "0.18"
+}
+
+apply plugin:"application"
+apply plugin:"java"
+
+version "0.1"
+group "com.td"
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://jcenter.bintray.com" }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'io.micronaut:micronaut-bom:1.0.4'
+    }
+}
+
+dependencies {
+
+    /*依赖注入相关*/
+    annotationProcessor "io.micronaut:micronaut-inject-java"
+    compileOnly "io.micronaut:micronaut-inject-java"
+    testCompile "io.micronaut:micronaut-inject-java"
+    compile "io.micronaut:micronaut-inject"
+    testCompile "org.hamcrest:hamcrest-all:1.3"
+
+    /* swagger(openapi协议实现) */
+    annotationProcessor "io.micronaut.configuration:micronaut-openapi"
+    compile "io.swagger.core.v3:swagger-annotations"
+
+    /*校验*/
+    annotationProcessor "io.micronaut:micronaut-validation"
+    compile "io.micronaut:micronaut-validation"
+    compile "io.micronaut:micronaut-runtime"
+
+    /*http-client*/
+    compile "io.micronaut:micronaut-http-client"
+    /*http-server*/
+    compile "io.micronaut:micronaut-http-server-netty"
+
+    /* Micronaut Serverless Functions */
+
+
+    /*logback日志*/
+    runtime "ch.qos.logback:logback-classic:1.2.3"
+
+    /*服务注册发现*/
+    compile "io.micronaut:micronaut-discovery-client:1.0.4"
+
+    /*junit单元测试*/
+    compile "junit:junit:4.12"
+
+}
+
+shadowJar {
+    mergeServiceFiles()
+}
+
+run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
+
+mainClassName = "com.td.Application"
+
+tasks.withType(JavaCompile){
+    options.encoding = "UTF-8"
+    options.compilerArgs.add('-parameters')
+}

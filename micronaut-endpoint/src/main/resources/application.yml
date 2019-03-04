@@ -1,0 +1,31 @@
+micronaut:
+    application:
+        name: endpoints
+    server:
+        port: 8087
+    # swagger
+    router:
+        static-resources:
+            swagger:
+                #paths: classpath:META-INF/swagger
+                mapping: /swagger/**
+# 端点管理
+endpoints:
+    # 检查检查端点
+    health:
+        enabled: true
+        sensitive: flase
+        details-visible: ANONYMOUS
+        status:
+            http-mapping:
+                DOWN: 503
+                UNKNOWN: 200
+                UP: 200
+    # bean信息端点
+    beans:
+        enabled: true
+        sensitive: flase
+    # 停止服务器端点
+    stop:
+        enabled: true
+        sensitive: flase

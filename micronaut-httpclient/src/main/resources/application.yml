@@ -1,0 +1,13 @@
+micronaut:
+    application:
+        name: httpclient
+    server:
+        port: 8888
+    #        port: -1  随机端口号
+    router:
+        static-resources:
+            swagger:
+                paths: classpath:META-INF/swagger
+                mapping: /swagger/**
+
+
